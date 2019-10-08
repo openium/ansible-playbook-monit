@@ -1,9 +1,22 @@
 # {{ ansible_managed }}
+# ref: https://www.mmonit.com/monit/documentation/monit.html
 
 set daemon {{ monit_cycle }}
 set logfile {{ monit_log_destination }}
 set statefile {{ monit_state_file }}
 set idfile {{ monit_id_file }}
+set limits {
+#     programOutput:     512 B,      # check program's output truncate limit
+#     sendExpectBuffer:  256 B,      # limit for send/expect protocol test
+#     fileContentBuffer: 512 B,      # limit for file content test
+#     httpContentBuffer: 1 MB,       # limit for HTTP content test
+     networkTimeout:    20 seconds   # timeout for network I/O # default is 5 seconds
+#     programTimeout:    300 seconds # timeout for check program
+#     stopTimeout:       30 seconds  # timeout for service stop
+#     startTimeout:      30 seconds  # timeout for service start
+#     restartTimeout:    30 seconds  # timeout for service restart
+}
+
 {% if monit_eventqueue_dir is defined %}
 set eventqueue
   basedir {{ monit_eventqueue_dir | default('/var/lib/monit/events') }}
