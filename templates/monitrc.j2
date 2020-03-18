@@ -28,4 +28,9 @@ set eventqueue
 set mmonit https://{{ monit_mmonit_user }}:{{ monit_mmonit_password }}@{{ monit_mmonit_host }}/collector
 {% endif %}
 
+set httpd
+  port 2812
+  use address 127.0.0.1
+  allow monit:monit
+
 include {{ monit_includes }}/*
