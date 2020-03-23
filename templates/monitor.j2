@@ -3,6 +3,7 @@
 
 {% if monit_monitor.type == 'process' %}
 check process {{ monit_monitor.name }} with pidfile {{ monit_monitor.target }}
+  if does not exist for 2 cycles then alert
 {% elif monit_monitor.type == 'process_by_name' %}
 check process {{ monit_monitor.name }} with matching "{{ monit_monitor.target }}"
 {% elif monit_monitor.type == 'file' %}
